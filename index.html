@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD</title>
+    <!-- Link Font awesome && BS v5 && style.css  -->
+    <link rel="stylesheet" href="assets/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="add-product">
+            <h2 class="text-center text-primary fs-1 py-4">Product Management System</h2>
+            <label for="productName" class="label-form">Product Name:</label>
+            <input type="text" class="form-control mb-2" id="productName">
+
+            <label for="productPrice" class="label-form">Product Price:</label>
+            <input type="text" class="form-control mb-2" id="productPrice">
+
+            <label for="productCategory" class="label-form">Product Category:</label>
+            <input type="text" class="form-control mb-2" id="productCategory">
+
+            <label for="productDesc" class="label-form">Product Description:</label>
+            <input type="text" class="form-control mb-2" id="productDesc">
+            <button class="btn btn-outline-info" id="btn_add">Add Product</button>
+            <button class="btn btn-outline-success ms-4 " id="btn_sort">Sort Data</button>
+        </div>
+        <div class="display-product mt-4">
+            <table class="table table-dark table-striped">
+                <thead>
+                    <tr>
+                        <th>Index</th>
+                        <th>ProductName</th>
+                        <th>ProductPrice</th>
+                        <th>ProductCategory</th>
+                        <th>ProductDesc</th>
+                        <th>Update</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+
+    <!-- File Js && BS  -->
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/script.js"></script>
+</body>
+
+</html>
