@@ -14,6 +14,13 @@ var AllProducts = [];
 // create object to add data from global to access in any function
 
 /* كدا global يعني التعديل جوا بيعدل عليه ىلازم ارجعه عشن اخد منه نسخه تانيه  حطه جوا داله GetData*/
+
+//0- Get Data From Local Storage
+if(localStorage.getItem('products') != null){
+  AllProducts=JSON.parse(localStorage.getItem('products'));
+  displayProducts();
+}
+
 //1- get DataFrom User
 function getData() {
   var product = {
@@ -43,23 +50,31 @@ function validData() {
 //4- push object in array list
 function addFirst(productObject) {
   AllProducts.unshift(productObject);
+  localStorage.setItem('products',JSON.stringify(AllProducts));
 }
 function addLast(productObject) {
   AllProducts.push(productObject);
+  localStorage.setItem('products',JSON.stringify(AllProducts));
+
 }
 //5- display data in array for table tbody innerHTML
 function displayProducts() {
     //Clear  Content Data
     contentAdd.innerHTML = "";
+    if(AllProducts.length > 1){
+      btn_sort.style.visibility="visible";
+    }else{
+      btn_sort.style.visibility="hidden";
+    }
   for (var i = 0; i < AllProducts.length; i++) {
-    contentAdd.innerHTML += `<tr>
+      contentAdd.innerHTML += `<tr>
             <td>${i}</td>
             <td>${AllProducts[i].name}</td>
             <td>${AllProducts[i].price}</td>
             <td>${AllProducts[i].category}</td>
             <td>${AllProducts[i].Desc}</td>
-            <td><button class="btn btn-warning" data-item="${i}" id="btn_update" onclick="updateProduct(this)">Update</button></td>
-            <td><button class="btn btn-danger"  data-item="${i}" id="btn_delete" onclick="deleteProduct(this);">Delete</button></td>
+            <td><button class="btn btn-warning" data-item="${i}" id="btn_update" onclick="updateProduct(${i})">Update</button></td>
+            <td><button class="btn btn-danger"  data-item="${i}" id="btn_delete" onclick="deleteProduct(${i});">Delete</button></td>
         </tr>`;
   }
 }
@@ -87,18 +102,18 @@ function sortedArray() {
 }
 
 //8- Delete Function
-function deleteProduct(e) {
-  var startDelete = parseInt(e.getAttribute("data-item"));
-  AllProducts.splice(startDelete,1);
+function deleteProduct(i) {
+  AllProducts.splice(i,1);
+  localStorage.setItem('products',JSON.stringify(AllProducts));
   displayProducts();
 }
 
 //9- Update Function
-function updateProduct(e){
-    var startDelete = parseInt(e.getAttribute("data-item"));
+function updateProduct(i){
     validData();
     var product=getData();
-    AllProducts.splice(startDelete,1,product);
+    AllProducts.splice(i,1,product);
+    localStorage.setItem('products',JSON.stringify(AllProducts));
     displayProducts();
     clearData();
 }
