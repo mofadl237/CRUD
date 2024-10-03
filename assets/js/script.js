@@ -2,6 +2,7 @@ var productName = document.getElementById("productName");
 var productPrice = document.getElementById("productPrice");
 var productCategory = document.getElementById("productCategory");
 var productDesc = document.getElementById("productDesc");
+var productSearch=document.querySelector("#productSearch");
 
 var contentAdd = document.querySelector("table tbody");
 //Access 4 button In This Project
@@ -55,28 +56,34 @@ function addFirst(productObject) {
 function addLast(productObject) {
   AllProducts.push(productObject);
   localStorage.setItem('products',JSON.stringify(AllProducts));
-
 }
 //5- display data in array for table tbody innerHTML
+function displayArray(Array){
+  contentAdd.innerHTML = "";
+  if(Array.length<1){
+    contentAdd.innerHTML += `<tr > <td colspan="7"  style="text-align: center;">Not Found Product</td> </tr>`;
+  }
+  for (var i = 0; i < Array.length; i++) {
+    contentAdd.innerHTML += `<tr>
+          <td>${i}</td>
+          <td>${Array[i].name}</td>
+          <td>${Array[i].price}</td>
+          <td>${Array[i].category}</td>
+          <td>${Array[i].Desc}</td>
+          <td><button class="btn btn-warning" data-item="${i}" id="btn_update" onclick="updateProduct(${i})">Update</button></td>
+          <td><button class="btn btn-danger"  data-item="${i}" id="btn_delete" onclick="deleteProduct(${i});">Delete</button></td>
+      </tr>`;
+}
+}
 function displayProducts() {
     //Clear  Content Data
-    contentAdd.innerHTML = "";
+    
     if(AllProducts.length > 1){
       btn_sort.style.visibility="visible";
     }else{
       btn_sort.style.visibility="hidden";
     }
-  for (var i = 0; i < AllProducts.length; i++) {
-      contentAdd.innerHTML += `<tr>
-            <td>${i}</td>
-            <td>${AllProducts[i].name}</td>
-            <td>${AllProducts[i].price}</td>
-            <td>${AllProducts[i].category}</td>
-            <td>${AllProducts[i].Desc}</td>
-            <td><button class="btn btn-warning" data-item="${i}" id="btn_update" onclick="updateProduct(${i})">Update</button></td>
-            <td><button class="btn btn-danger"  data-item="${i}" id="btn_delete" onclick="deleteProduct(${i});">Delete</button></td>
-        </tr>`;
-  }
+    displayArray(AllProducts);
 }
 //6- clear data from inputs
 function clearData() {
@@ -128,6 +135,18 @@ function AddProduct() {
   clearData();
   displayProducts();
 }
+//10- Search Data
+function searchData(){
+  var search = productSearch.value;
+  var ProductSearchArray=[];
+  for(var i=0;i<AllProducts.length;i++){
+    if(AllProducts[i].name.toLowerCase().includes(search.toLowerCase())){
+      ProductSearchArray.push(AllProducts[i]);
+    }
+  }
+  displayArray(ProductSearchArray);
+}
+productSearch.addEventListener("input",searchData);
 //Add Event On Buttons
 btn_add.addEventListener("click", AddProduct);
 btn_sort.addEventListener("click", sortedArray);
